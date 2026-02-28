@@ -70,7 +70,7 @@ async function saveTask() {
 
     if (!title || !time || !selectedDay) return alert("Faltan datos");
 
-    const response = await fetch('http://localhost:5000/api/tareas', {
+    const response = await fetch('https://zenkaiplannerback.onrender.com/api/tareas', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
@@ -96,7 +96,7 @@ async function showDayTasks(date) {
     dayTasksContainer.innerHTML = `<h4>Tareas para: ${date}</h4>`;
 
     try {
-        const response = await fetch(`http://localhost:5000/api/tareas/${username}`);
+        const response = await fetch(`https://zenkaiplannerback.onrender.com/api/tareas/${username}`);
         const todasLasTareas = await response.json();
         const tareasDelDia = todasLasTareas.filter(t => t.fecha === date);
 
@@ -128,7 +128,7 @@ async function toggleCheckTarea(id, checked, elementoInput) {
     }
 
     try {
-        await fetch(`http://localhost:5000/api/tareas/${id}`, {
+        await fetch(`https://zenkaiplannerback.onrender.com/api/tareas/${id}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ completada: checked })
@@ -140,7 +140,7 @@ async function toggleCheckTarea(id, checked, elementoInput) {
 }
 
 async function eliminarTareaBD(id, date) {
-    await fetch(`http://localhost:5000/api/tareas/${id}`, { method: 'DELETE' });
+    await fetch(`https://zenkaiplannerback.onrender.com/api/tareas/${id}`, { method: 'DELETE' });
     showDayTasks(date);
 }
 
@@ -149,7 +149,7 @@ async function cargarMetas() {
     const container = document.getElementById("goalsContainer");
     if (!container) return;
 
-    const response = await fetch(`http://localhost:5000/api/metas/${username}`);
+    const response = await fetch(`https://zenkaiplannerback.onrender.com/api/metas/${username}`);
     const metas = await response.json();
 
     container.innerHTML = "";
@@ -170,7 +170,7 @@ function renderizarMeta(id, texto) {
 }
 
 async function toggleCheckMeta(id, estado) {
-    await fetch(`http://localhost:5000/api/metas/${id}`, {
+    await fetch(`https://zenkaiplannerback.onrender.com/api/metas/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ completada: estado })
@@ -184,7 +184,7 @@ async function addItem(containerId) {
 
     const username = localStorage.getItem("usuarioLogueado");
 
-    const response = await fetch('http://localhost:5000/api/metas', {
+    const response = await fetch('https://zenkaiplannerback.onrender.com/api/metas', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, texto })
@@ -197,7 +197,7 @@ async function addItem(containerId) {
 }
 
 async function eliminarMetaBD(id) {
-    const response = await fetch(`http://localhost:5000/api/metas/${id}`, {
+    const response = await fetch(`https://zenkaiplannerback.onrender.com/api/metas/${id}`, {
         method: 'DELETE'
     });
     if (response.ok) {
